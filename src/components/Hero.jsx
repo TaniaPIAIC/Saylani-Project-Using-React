@@ -46,15 +46,6 @@ const Hero = ({ data }) => {
                 <ArrowUpRight className="h-5 w-5" />
               </button>
             </div>
-
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-              {data.stats.map((item) => (
-                <div key={item.label} className="rounded-[28px] border border-white/10 bg-white/10 p-5 text-center backdrop-blur-sm">
-                  <p className="text-3xl font-black text-white">{item.value}</p>
-                  <p className="mt-2 text-sm uppercase tracking-[0.2em] text-slate-300">{item.label}</p>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="hidden lg:block">

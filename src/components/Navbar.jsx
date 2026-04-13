@@ -1,6 +1,7 @@
 ﻿import React, { useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import logo from "../assets/images/Saylani Logo.png"
+import {Link} from "react-router-dom";
 
 const Navbar = ({ menuItems }) => {
   const [open, setOpen] = useState(false);
@@ -12,12 +13,13 @@ const Navbar = ({ menuItems }) => {
 
         <nav className="hidden items-center gap-8 lg:flex">
           {menuItems.map((item) => (
-            <button
-              key={item.label}
-              className="text-sm font-medium text-slate-700 transition hover:text-sky-600"
-            >
-              {item.label}
-            </button>
+            <Link
+    key={item.label}
+    to={item.path || "/"}
+    className="text-sm font-medium text-slate-700 transition hover:text-sky-600"
+  >
+    {item.label}
+  </Link>
           ))}
         </nav>
 

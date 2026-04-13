@@ -3,19 +3,18 @@ import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import SocialPosts from "../components/SocialPosts";
-import Features from "../components/Features";
 import Courses from "../components/Courses";
-import Testimonials from "../components/Testimonials";
-import Campuses from "../components/Campuses";
 import Vision from "../components/Vision";
 import Footer from "../components/Footer";
 
+
+
 const menuItems = [
   { label: "Home" },
-  { label: "About" },
   { label: "Courses" },
-  { label: "Campuses" },
-  { label: "Check Result" },
+  { label: "Student Login", path: "/student-login" },
+  { label: "Student Signup", path: "/student-signup" },
+  { label: "Admin Login", path: "/admin-login" },
 ];
 
 const heroData = {
@@ -24,7 +23,7 @@ const heroData = {
   subtitle:
     "A professional redesign inspired by modern education platforms. Showcase social updates, highlight new courses, and deliver a polished experience.",
   actions: [
-    { label: "Student Login / Signup", style: "primary" },
+    { label: "Student Login / Signup", style: "primary", path: "/student-login" },
     { label: "Explore Courses", style: "secondary" },
   ],
   stats: [
@@ -72,44 +71,7 @@ const socialPostsData = [
   },
 ];
 
-const featuresData = [
-  {
-    title: "Hands-On Practical Training",
-    description:
-      "Students learn through real tasks, guided practice and project-based implementation.",
-    accent: "cyan",
-  },
-  {
-    title: "Career-Focused Learning",
-    description:
-      "Course structure is aligned with employability, freelancing and industry-ready skills.",
-    accent: "emerald",
-  },
-  {
-    title: "Professional Learning Environment",
-    description:
-      "A polished and trusted platform experience inspired by modern education products.",
-    accent: "blue",
-  },
-  {
-    title: "Modern Course Categories",
-    description:
-      "Explore development, AI, networking, design and vocational training in one place.",
-    accent: "violet",
-  },
-  {
-    title: "Strong Brand Presentation",
-    description:
-      "Designed to feel premium, clean and client-facing rather than just student-level work.",
-    accent: "amber",
-  },
-  {
-    title: "Responsive Across Devices",
-    description:
-      "The layout adapts fluidly for desktop, tablet and mobile screens.",
-    accent: "rose",
-  },
-];
+
 
 const tabs = [
   "Admissions Open",
@@ -213,39 +175,9 @@ const allCourses = [
   },
 ];
 
-const testimonialsData = [
-  {
-    name: "Muhammad Saad",
-    review:
-      "SMIT transformed my confidence. The practical approach made everything feel real and useful.",
-    image: "https://www.saylanimit.com/assets/reviews/muhammad_saad.png",
-  },
-  {
-    name: "Muhammad Fasih",
-    review:
-      "The course delivery is clear and market-focused. I learned skills that actually matter.",
-    image: "https://www.saylanimit.com/assets/reviews/muhammad_fasih.png",
-  },
-  {
-    name: "Kamran",
-    review:
-      "A very professional and inspiring learning experience. It feels modern, serious and valuable.",
-    image: "https://www.saylanimit.com/assets/reviews/kamran.png",
-  },
-];
 
-const campusLocations = [
-  "Karachi",
-  "Faisalabad",
-  "Hyderabad",
-  "Peshawar",
-  "Quetta",
-  "Islamabad",
-  "Rawalpindi",
-  "Gujranwala",
-  "Sukkur",
-  "Lakki Marwat",
-];
+
+
 
 const visionMetrics = [
   {
@@ -285,15 +217,15 @@ const Home = () => {
       <Hero data={heroData} />
       <Stats stats={statsData} />
       <SocialPosts posts={socialPostsData} />
-      <Features features={featuresData} />
+      
       <Courses
         tabs={tabs}
         activeTab={activeCourseTab}
         onTabChange={setActiveCourseTab}
         courses={activeCourses}
       />
-      <Testimonials testimonials={testimonialsData} />
-      <Campuses campuses={campusLocations} />
+      
+      
       <Vision metrics={visionMetrics} />
       <Footer />
     </>

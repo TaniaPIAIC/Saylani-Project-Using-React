@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import "./App.css";
+import StudentLogin from "./pages/StudentLogin";
+
 
 
 const App = () => {
@@ -8,8 +9,10 @@ const App = () => {
     <>
       <Routes>
         <Route path= '/' element={<Home />} />
+        <Route path='/student-login' element={<StudentLogin />} />
       </Routes>
     </>
+    
   );
 };
 
