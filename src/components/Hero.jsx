@@ -1,8 +1,11 @@
 ﻿import React from "react";
 import { ArrowUpRight, BookOpen, User, Sparkles, PlayCircle } from "lucide-react";
 import video from "../assets/video/saylani website video (online-video-cutter.com).mp4";
+import { useNavigate } from "react-router-dom";
 
 const Hero = ({ data }) => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-[calc(100vh-80px)] overflow-hidden bg-slate-950 text-white">
       <video
@@ -35,12 +38,18 @@ const Hero = ({ data }) => {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <button className="inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-sky-600 via-cyan-500 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-[0_24px_64px_rgba(14,165,233,0.25)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_72px_rgba(14,165,233,0.30)]">
+              <button
+                onClick={() => navigate(data.actions[0].path)}
+                className="inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-sky-600 via-cyan-500 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-[0_24px_64px_rgba(14,165,233,0.25)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_28px_72px_rgba(14,165,233,0.30)]"
+              >
                 <User className="h-5 w-5" />
                 {data.actions[0].label}
               </button>
 
-              <button className="inline-flex items-center justify-center gap-3 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-base font-semibold text-white transition duration-300 hover:bg-white/20">
+              <button
+                onClick={() => navigate(data.actions[1].path)}
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-base font-semibold text-white transition duration-300 hover:bg-white/20"
+              >
                 <BookOpen className="h-5 w-5" />
                 {data.actions[1].label}
                 <ArrowUpRight className="h-5 w-5" />

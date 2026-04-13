@@ -1,7 +1,7 @@
 ﻿import React, { useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import logo from "../assets/images/Saylani Logo.png"
-import {Link} from "react-router-dom";
+import logo from "../assets/images/Saylani Logo.png";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ menuItems }) => {
   const [open, setOpen] = useState(false);
@@ -9,17 +9,17 @@ const Navbar = ({ menuItems }) => {
   return (
     <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-xl shadow-sm shadow-slate-900/5">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <img className="w-25"  src={logo} alt="Saylani Logo" />
+        <img className="w-25" src={logo} alt="Saylani Logo" />
 
         <nav className="hidden items-center gap-8 lg:flex">
           {menuItems.map((item) => (
             <Link
-    key={item.label}
-    to={item.path || "/"}
-    className="text-sm font-medium text-slate-700 transition hover:text-sky-600"
-  >
-    {item.label}
-  </Link>
+              key={item.label}
+              to={item.path || "/"}
+              className="text-sm font-medium text-slate-700 transition hover:text-sky-600"
+            >
+              {item.label}
+            </Link>
           ))}
         </nav>
 
@@ -39,26 +39,32 @@ const Navbar = ({ menuItems }) => {
         </button>
       </div>
 
-      <div className={`fixed inset-0 z-50 bg-white/95 p-6 transition-transform duration-300 lg:hidden ${open ? "translate-x-0" : "translate-x-full"}`}>
+      <div
+        className={`fixed inset-0 z-50 bg-white/95 p-6 transition-transform duration-300 lg:hidden ${open ? "translate-x-0" : "translate-x-full"}`}
+      >
         <div className="mb-8 flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold text-slate-900">SMIT Connect</p>
             <p className="text-xs text-slate-500">Student portal</p>
           </div>
-          <button onClick={() => setOpen(false)} aria-label="Close navigation menu">
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="Close navigation menu"
+          >
             <X className="h-5 w-5 text-slate-700" />
           </button>
         </div>
 
         <div className="space-y-4">
           {menuItems.map((item) => (
-            <button
+            <Link
               key={item.label}
+              to={item.path || "/"}
               className="block w-full rounded-3xl border border-slate-200 px-4 py-4 text-left text-lg font-semibold text-slate-800 transition hover:bg-slate-100"
               onClick={() => setOpen(false)}
             >
               {item.label}
-            </button>
+            </Link>
           ))}
         </div>
       </div>
