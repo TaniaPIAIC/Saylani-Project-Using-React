@@ -1,6 +1,8 @@
 ﻿import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Courses = ({ tabs, activeTab, onTabChange, courses }) => {
+  const navigate = useNavigate();
   return (
     <section className="py-16 bg-slate-100">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -42,7 +44,11 @@ const Courses = ({ tabs, activeTab, onTabChange, courses }) => {
                 <p className="mt-3 text-slate-600">{course.description}</p>
                 <div className="mt-6 flex items-center justify-between text-sm text-slate-500">
                   <span>{course.duration}</span>
-                  <button className="rounded-full bg-gradient-to-r from-sky-600 to-cyan-600 px-4 py-2 text-xs font-semibold text-white transition hover:opacity-90">
+                  <button
+                    type="button"
+                    onClick={() => navigate("/courses")}
+                    className="cursor-pointer rounded-full bg-gradient-to-r from-sky-600 to-cyan-600 px-4 py-2 text-xs font-semibold text-white transition hover:opacity-90"
+                  >
                     Enroll Now
                   </button>
                 </div>

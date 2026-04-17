@@ -14,7 +14,7 @@ const menuItems = [
   { label: "Courses" },
   { label: "Student Login", path: "/student-login" },
   { label: "Student Signup", path: "/student-signup" },
-  { label: "Admin Login", path: "/admin-login" },
+  { label: "Teacher Login", path: "/teacher-login" },
 ];
 
 const heroData = {
@@ -24,7 +24,7 @@ const heroData = {
     "A professional redesign inspired by modern education platforms. Showcase social updates, highlight new courses, and deliver a polished experience.",
   actions: [
     { label: "Student Login / Signup", style: "primary", path: "/student-login" },
-    { label: "Explore Courses", style: "secondary" },
+    { label: "Explore Courses", style: "secondary", path: "/courses" },
   ],
   stats: [
     { value: "16,000+", label: "Students Trained" },

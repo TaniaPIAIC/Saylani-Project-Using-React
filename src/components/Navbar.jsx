@@ -1,74 +1,235 @@
-﻿import React, { useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
-import logo from "../assets/images/Saylani Logo.png";
-import { Link } from "react-router-dom";
+﻿import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../redux/slices/authSlice";
+import { Menu, X, LogOut } from "lucide-react";
+import logo from "../assets/favicon/smit-logo.png";
 
-const Navbar = ({ menuItems }) => {
-  const [open, setOpen] = useState(false);
+const Navbar = ({ menuItems = [] }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isAuthenticated, userType } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const defaultMenuItems = [
+    { label: "Home", path: "/" },
+    { label: "Courses", path: "/courses" },
+  ];
+
+  const authLinks = !isAuthenticated
+    ? [
+        { label: "Student Signup", path: "/student-signup" },
+        { label: "Student Login", path: "/student-login" },
+        { label: "Teacher Login", path: "/teacher-login" },
+      ]
+    : [];
+
+  const navItems = !isAuthenticated && menuItems.length > 0 ? menuItems : defaultMenuItems;
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+    setMobileMenuOpen(false);
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-xl shadow-sm shadow-slate-900/5">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <img className="w-25" src={logo} alt="Saylani Logo" />
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logo} alt="SMIT" className="h-10" />
+          </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
-          {menuItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.path || "/"}
-              className="text-sm font-medium text-slate-700 transition hover:text-sky-600"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                to={item.path || "/"}
+                className="cursor-pointer text-gray-700 hover:text-blue-600 font-medium transition"
+              >
+                {item.label}
+              </Link>
+            ))}
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <button className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-600 to-cyan-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:-translate-y-0.5 hover:shadow-xl">
-            Apply Now
-            <ArrowUpRight className="h-4 w-4" />
-          </button>
-        </div>
+            {isAuthenticated ? (
+              <>
+                {userType === "student" && (
+                  <>
+                    <Link
+                      to="/my-applications"
+                      className="cursor-pointer text-gray-700 hover:text-blue-600 font-medium transition"
+                    >
+                      Applications
+                    </Link>
+                    <Link
+                      to="/student-leaves"
+                      className="cursor-pointer text-gray-700 hover:text-blue-600 font-medium transition"
+                    >
+                      Leave Requests
+                    </Link>
+                  </>
+                )}
 
-        <button
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm lg:hidden"
-          onClick={() => setOpen(true)}
-          aria-label="Open navigation menu"
-        >
-          <Menu className="h-5 w-5" />
-        </button>
-      </div>
+                {userType === "teacher" && (
+                  <>
+                    <Link
+                      to="/teacher/manage-students"
+                      className="text-gray-700 hover:text-blue-600 font-medium transition"
+                    >
+                      Students
+                    </Link>
+                    <Link
+                      to="/teacher/manage-courses"
+                      className="text-gray-700 hover:text-blue-600 font-medium transition"
+                    >
+                      Courses
+                    </Link>
+                    <Link
+                      to="/teacher/manage-leaves"
+                      className="text-gray-700 hover:text-blue-600 font-medium transition"
+                    >
+                      Leaves
+                    </Link>
+                    <Link
+                      to="/teacher/manage-teachers"
+                      className="text-gray-700 hover:text-blue-600 font-medium transition"
+                    >
+                      Teachers
+                    </Link>
+                  </>
+                )}
 
-      <div
-        className={`fixed inset-0 z-50 bg-white/95 p-6 transition-transform duration-300 lg:hidden ${open ? "translate-x-0" : "translate-x-full"}`}
-      >
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <p className="text-sm font-semibold text-slate-900">SMIT Connect</p>
-            <p className="text-xs text-slate-500">Student portal</p>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition cursor-pointer"
+                >
+                  <LogOut size={18} /> Logout
+                </button>
+              </>
+            ) : (
+              authLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  className="cursor-pointer text-gray-700 hover:text-blue-600 font-medium transition"
+                >
+                  {item.label}
+                </Link>
+              ))
+            )}
           </div>
+
+          {/* Mobile menu button */}
           <button
-            onClick={() => setOpen(false)}
-            aria-label="Close navigation menu"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2"
           >
-            <X className="h-5 w-5 text-slate-700" />
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-
-        <div className="space-y-4">
-          {menuItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.path || "/"}
-              className="block w-full rounded-3xl border border-slate-200 px-4 py-4 text-left text-lg font-semibold text-slate-800 transition hover:bg-slate-100"
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
       </div>
-    </header>
+
+      {/* Mobile Navigation */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200">
+          <div className="px-4 py-4 space-y-3">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                to={item.path || "/"}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-gray-700 hover:text-blue-600 font-medium"
+              >
+                {item.label}
+              </Link>
+            ))}
+
+            {isAuthenticated ? (
+              <>
+                {userType === "student" && (
+                  <>
+                    <Link
+                      to="/courses"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-gray-700 hover:text-blue-600 font-medium"
+                    >
+                      Courses
+                    </Link>
+                    <Link
+                      to="/my-applications"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-gray-700 hover:text-blue-600 font-medium"
+                    >
+                      Applications
+                    </Link>
+                    <Link
+                      to="/student-leaves"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-gray-700 hover:text-blue-600 font-medium"
+                    >
+                      Leave Requests
+                    </Link>
+                  </>
+                )}
+
+                {userType === "teacher" && (
+                  <>
+                    <Link
+                      to="/teacher/manage-students"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-gray-700 hover:text-blue-600 font-medium"
+                    >
+                      Students
+                    </Link>
+                    <Link
+                      to="/teacher/manage-courses"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-gray-700 hover:text-blue-600 font-medium"
+                    >
+                      Courses
+                    </Link>
+                    <Link
+                      to="/teacher/manage-leaves"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-gray-700 hover:text-blue-600 font-medium"
+                    >
+                      Leaves
+                    </Link>
+                    <Link
+                      to="/teacher/manage-teachers"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-gray-700 hover:text-blue-600 font-medium"
+                    >
+                      Teachers
+                    </Link>
+                  </>
+                )}
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition mt-2 cursor-pointer"
+                >
+                  <LogOut size={18} /> Logout
+                </button>
+              </>
+            ) : (
+              authLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="cursor-pointer block text-gray-700 hover:text-blue-600 font-medium"
+                >
+                  {item.label}
+                </Link>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
 
